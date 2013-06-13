@@ -40,12 +40,13 @@ class ThumbnailHelper extends Nette\Object
 	public function thumbnail($src, $width, $height = NULL)
 	{
 		$srcAbsPath = $this->wwwDir . '/' . $src;
-		$thumbRelPath = $this->createThumbPath($srcAbsPath, $width, $height);
-		$thumbAbsPath = $this->wwwDir . '/' . $thumbRelPath;
 
-		if (!file_exists($srcAbsPath)) {
+		if (!is_file($srcAbsPath)) {
 			return 'Image not found';
 		}
+
+		$thumbRelPath = $this->createThumbPath($srcAbsPath, $width, $height);
+		$thumbAbsPath = $this->wwwDir . '/' . $thumbRelPath;
 
 		if (!file_exists($thumbAbsPath) or (filemtime($thumbAbsPath) < filemtime($srcAbsPath))) {
 
