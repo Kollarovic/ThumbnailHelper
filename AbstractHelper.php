@@ -1,11 +1,17 @@
 <?php
 
+namespace ThumbnailHelper;
+
+use Nette,
+	Nette\Http\IRequest;
+
+
 /**
 * @author  Mario Kollarovic
 *
-* ThumbnailHelper
+* AbstractHelper
 */
-class ThumbnailHelper extends Nette\Object
+abstract class AbstractHelper extends Nette\Object
 {
 	
 	/** @var string */
@@ -17,17 +23,22 @@ class ThumbnailHelper extends Nette\Object
 	/** @var string */
 	private $thumbPathMask;
 
+	/** @var string */
+	private $placeholder;
+
 
 	/**
 	 * @param string
 	 * @param Nette\Http\IRequest
 	 * @param string
- 	 */
-	function __construct($wwwDir, Nette\Http\IRequest $httpRequest, $thumbPathMask='images/{filename}-{width}x{height}.{extension}')
+	 * @param string
+	 */
+	function __construct($wwwDir, IRequest $httpRequest, $thumbPathMask, $placeholder)
 	{
 		$this->wwwDir = $wwwDir;
 		$this->httpRequest = $httpRequest;
 		$this->thumbPathMask = $thumbPathMask;
+		$this->placeholder = $placeholder;
 	}
 
 
@@ -36,13 +47,13 @@ class ThumbnailHelper extends Nette\Object
 	 * @param int
 	 * @param int
 	 * @return string
- 	 */
+	 */
 	public function thumbnail($src, $width, $height = NULL)
 	{
 		$srcAbsPath = $this->wwwDir . '/' . $src;
 
 		if (!is_file($srcAbsPath)) {
-			return 'Image not found';
+			return $this->createPlaceholderPath($src, $width, $height);
 		}
 
 		$thumbRelPath = $this->createThumbPath($srcAbsPath, $width, $height);
@@ -69,12 +80,22 @@ class ThumbnailHelper extends Nette\Object
 	 * @param int
 	 * @param int
 	 * @return void
- 	 */
-	private function createThumb($src, $desc, $width, $height)
+	 */
+	abstract protected function createThumb($src, $desc, $width, $height);
+
+
+	/**
+	 * @param string
+	 * @param int
+	 * @param int
+	 * @return string
+	 */
+	private function createThumbPath($file, $width, $height)
 	{
-		$image = Nette\Image::fromFile($src);
-		$image->resize($width, $height);
-		$image->save($desc);
+		$pathinfo = pathinfo($file);
+		$search = array('{width}', '{height}', '{filename}', '{extension}');
+		$replace = array($width, $height, $pathinfo['filename'], $pathinfo['extension']);
+		return str_replace($search, $replace, $this->thumbPathMask);
 	}
 
 
@@ -83,13 +104,14 @@ class ThumbnailHelper extends Nette\Object
 	 * @param int
 	 * @param int
 	 * @return string
- 	 */
-	private function createThumbPath($file, $width, $height)
+	 */
+	private function createPlaceholderPath($src, $width, $height)
 	{
-		$pathinfo = pathinfo($file);
-		$search = array('{width}', '{height}', '{filename}', '{extension}');
-		$replace = array($width, $height, $pathinfo['filename'], $pathinfo['extension']);
-		return str_replace($search, $replace, $this->thumbPathMask);
+		$width = $width===NULL ? $height : $width;
+		$height = $height===NULL ? $width : $height;
+		$search = array('{width}', '{height}', '{src}');
+		$replace = array($width, $height, $src);
+		return str_replace($search, $replace, $this->placeholder);
 	}
 
 }

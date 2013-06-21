@@ -1,2 +1,2 @@
-Návod http://addons.nette.org/cs/thumbnail-helper
+Návod: http://addons.nette.org/cs/thumbnail-helper
 
