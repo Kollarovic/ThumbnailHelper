@@ -20,10 +20,10 @@ abstract class AbstractHelper extends Nette\Object
 	/** @var string */
 	protected $desc;
 
-	/** @var string */
+	/** @var int */
 	protected $width;
 
-	/** @var string */
+	/** @var int */
 	protected $height;
 
 	/** @var string */
