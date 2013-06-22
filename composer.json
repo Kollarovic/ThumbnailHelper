@@ -1,0 +1,19 @@
+{
+ 	"name": "kollarovic/thumbnail",
+	"description" : "Generating image thumbnails",
+    "keywords": ["thumbnail", "nette", "latte", "image"],
+	"version": "0.5",
+	"license": "New BSD",
+
+	"authors": [
+	{
+		"name": "Mario Kollarovic",
+		"email": "kollarovic@gmail.com"
+	}
+    ],
+
+    "require": {
+		"php": ">=5.3.1",
+		"nette/nette": "2.0.*"
+    }
+}
