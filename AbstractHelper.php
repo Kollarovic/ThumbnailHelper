@@ -1,6 +1,6 @@
 <?php
 
-namespace ThumbnailHelper;
+namespace Kollarovic\Thumbnail;
 
 use Nette,
 	Nette\Http\IRequest;

@@ -1,6 +1,6 @@
 <?php
 
-namespace ThumbnailHelper\DI;
+namespace Kollarovic\Thumbnail\DI;
 
 use Nette\Config\CompilerExtension;
 
@@ -27,7 +27,7 @@ class Extension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('thumbnail'))
-			->setClass('ThumbnailHelper\Helper', array(
+			->setClass('Kollarovic\Thumbnail\Helper', array(
 				'wwwDir' => $config['wwwDir'], 
 				'httpRequest' => $config['httpRequest'], 
 				'thumbPathMask' => $config['thumbPathMask'], 
