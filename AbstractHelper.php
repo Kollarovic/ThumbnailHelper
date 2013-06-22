@@ -15,6 +15,18 @@ abstract class AbstractHelper extends Nette\Object
 {
 	
 	/** @var string */
+	protected $src;
+
+	/** @var string */
+	protected $desc;
+
+	/** @var string */
+	protected $width;
+
+	/** @var string */
+	protected $height;
+
+	/** @var string */
 	private $wwwDir;
 
 	/** @var Nette\Http\IRequest */
@@ -50,23 +62,20 @@ abstract class AbstractHelper extends Nette\Object
 	 */
 	public function thumbnail($src, $width, $height = NULL)
 	{
-		$srcAbsPath = $this->wwwDir . '/' . $src;
+		$this->src = $this->wwwDir . '/' . $src;
+		$this->width = $width;
+		$this->height = $height;
 
-		if (!is_file($srcAbsPath)) {
-			return $this->createPlaceholderPath($src, $width, $height);
+		if (!is_file($this->src)) {
+			return $this->createPlaceholderPath();
 		}
 
-		$thumbRelPath = $this->createThumbPath($srcAbsPath, $width, $height);
-		$thumbAbsPath = $this->wwwDir . '/' . $thumbRelPath;
+		$thumbRelPath = $this->createThumbPath();
+		$this->desc = $this->wwwDir . '/' . $thumbRelPath;
 
-		if (!file_exists($thumbAbsPath) or (filemtime($thumbAbsPath) < filemtime($srcAbsPath))) {
-
-			$dir = dirname($thumbAbsPath);
-			if (!is_dir($dir)) {
-				mkdir($dir, 0777, true);
-			}
-
-			$this->createThumb($srcAbsPath, $thumbAbsPath, $width, $height);
+		if (!file_exists($this->desc) or (filemtime($this->desc) < filemtime($this->src))) {
+			$this->createDir();
+			$this->createThumb();
 			clearstatcache();
 		}
 
@@ -75,42 +84,44 @@ abstract class AbstractHelper extends Nette\Object
 
 
 	/**
-	 * @param string
-	 * @param string
-	 * @param int
-	 * @param int
 	 * @return void
 	 */
-	abstract protected function createThumb($src, $desc, $width, $height);
+	abstract protected function createThumb();
 
 
 	/**
-	 * @param string
-	 * @param int
-	 * @param int
+	 * @return void
+	 */
+	private function createDir()
+	{
+		$dir = dirname($this->desc);
+		if (!is_dir($dir)) {
+			mkdir($dir, 0777, true);
+		}
+	}
+
+
+	/**
 	 * @return string
 	 */
-	private function createThumbPath($file, $width, $height)
+	private function createThumbPath()
 	{
-		$pathinfo = pathinfo($file);
+		$pathinfo = pathinfo($this->src);
 		$search = array('{width}', '{height}', '{filename}', '{extension}');
-		$replace = array($width, $height, $pathinfo['filename'], $pathinfo['extension']);
+		$replace = array($this->width, $this->height, $pathinfo['filename'], $pathinfo['extension']);
 		return str_replace($search, $replace, $this->thumbPathMask);
 	}
 
 
 	/**
-	 * @param string
-	 * @param int
-	 * @param int
 	 * @return string
 	 */
-	private function createPlaceholderPath($src, $width, $height)
+	private function createPlaceholderPath()
 	{
-		$width = $width===NULL ? $height : $width;
-		$height = $height===NULL ? $width : $height;
+		$width = $this->width===NULL ? $this->height : $this->width;
+		$height = $this->height===NULL ? $this->width : $this->height;
 		$search = array('{width}', '{height}', '{src}');
-		$replace = array($width, $height, $src);
+		$replace = array($width, $height, $this->src);
 		return str_replace($search, $replace, $this->placeholder);
 	}
 

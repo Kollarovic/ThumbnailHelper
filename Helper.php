@@ -14,17 +14,13 @@ class Helper extends AbstractHelper
 {
 
 	/**
-	 * @param string
-	 * @param string
-	 * @param int
-	 * @param int
 	 * @return void
  	 */
-	protected function createThumb($src, $desc, $width, $height)
+	protected function createThumb()
 	{
-		$image = Nette\Image::fromFile($src);
-		$image->resize($width, $height);
-		$image->save($desc);
+		$image = Nette\Image::fromFile($this->src);
+		$image->resize($this->width, $this->height);
+		$image->save($this->desc);
 	}
 
 }
