@@ -20,7 +20,8 @@ Použitie v šablóne
 
 \--
 
-Helper skontroluje či existuje náhľad k obrázku a či je aktuálny. Ak nie, tak ho vygeneruje a uloží podľa nastavenia. Poprípade vytvorí potrebné podadresáre. Helper vracia cestu k náhľadu.
+Helper skontroluje či existuje náhľad k obrázku a či je aktuálny. Ak nie, tak ho vygeneruje a uloží podľa nastavenia. 
+Poprípade vytvorí potrebné podadresáre. Helper vracia cestu k náhľadu.
 
 Inštalácia
 ---------------
@@ -78,7 +79,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 Konfigurácia
 ---------------
 
-Konfigurácia je nepovinná a zadávame ju do `app/config/config.neon`, do sekcie `thumbnail`. Na výpise sú štandardné hodnoty:
+Konfigurácia je nepovinná a zadávame ju do `app/config/config.neon`, do sekcie `thumbnail`. 
+Na výpise sú štandardné hodnoty:
 
 /-- code neon
 
@@ -97,7 +99,8 @@ napr pre `{='images/product.jpg'|thumbnail: 150, 150}`
 |images/{filename}-{width}x{height}.{extension}| images/product-150x150.jpg
 |images/cache/{width}x{height}/{filename}.{extension}| images/cache/150x150/product.jpg
 
-Parameter `placeholder` je url obrázku ktoré bude vrátené v prípade, že zdrojový obrázok neexistuje. Url je formátovaná obdobne ako `thumbPathMask`.
+Parameter `placeholder` je url obrázku ktoré bude vrátené v prípade, že zdrojový obrázok neexistuje. 
+Url je formátovaná obdobne ako `thumbPathMask`.
 
 napr:
 
