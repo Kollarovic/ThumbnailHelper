@@ -8,9 +8,9 @@ use Nette;
 /**
 * @author  Mario Kollarovic
 *
-* Helper
+* Generator
 */
-class Helper extends AbstractHelper
+class Generator extends AbstractGenerator
 {
 
 	/**

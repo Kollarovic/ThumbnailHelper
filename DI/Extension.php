@@ -27,7 +27,7 @@ class Extension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('thumbnail'))
-			->setClass('Kollarovic\Thumbnail\Helper', array(
+			->setClass('Kollarovic\Thumbnail\Generator', array(
 				'wwwDir' => $config['wwwDir'], 
 				'httpRequest' => $config['httpRequest'], 
 				'thumbPathMask' => $config['thumbPathMask'], 

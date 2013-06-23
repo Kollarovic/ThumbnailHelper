@@ -9,9 +9,9 @@ use Nette,
 /**
 * @author  Mario Kollarovic
 *
-* AbstractHelper
+* AbstractGenerator
 */
-abstract class AbstractHelper extends Nette\Object
+abstract class AbstractGenerator extends Nette\Object
 {
 	
 	/** @var string */
