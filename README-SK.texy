@@ -99,8 +99,8 @@ napr pre `{='images/product.jpg'|thumbnail: 150, 150}`
 |images/{filename}-{width}x{height}.{extension}| images/product-150x150.jpg
 |images/cache/{width}x{height}/{filename}.{extension}| images/cache/150x150/product.jpg
 
-Parameter `placeholder` je url obrázku ktoré bude vrátené v prípade, že zdrojový obrázok neexistuje. 
-Url je formátovaná obdobne ako `thumbPathMask`.
+Parameter `placeholder` je url obrázku, ktoré bude vrátené v prípade, že zdrojový obrázok neexistuje. 
+Url je formátované obdobne ako `thumbPathMask`.
 
 napr:
 
