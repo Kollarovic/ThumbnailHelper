@@ -1,0 +1,112 @@
+ThumbnailHelper
+****************
+
+Generovanie náhľadov k obrázkom v šablóne. .[perex]
+
+|Verzia | 0.5
+| Github | https://github.com/Kollarovic/ThumbnailHelper
+|Autor | Mário Kollarovič
+|Licencia | New BSD License
+
+
+Použitie v šablóne
+--------------------------
+
+/--html
+
+{var $image='images/image.jpg'}
+
+<img src="{$image|thumbnail: 150, 150}" />
+
+\--
+
+Helper skontroluje či existuje náhľad k obrázku a či je aktuálny. Ak nie, tak ho vygeneruje a uloží podľa nastavenia. Poprípade vytvorí potrebné podadresáre. Helper vracia cestu k náhľadu.
+
+Inštalácia
+---------------
+
+Skopírujeme triedy do aplikácie najlepšie cez composer - `composer.json`:
+
+/-- code js
+
+{
+	"require":{
+		"kollarovic/thumbnail": "dev-master"
+	}
+}
+
+\--
+
+
+V `app/bootstrap.php` zaregistrujeme rozšírenie:
+
+/-- code php
+
+$configurator->onCompile[] = function ($configurator, $compiler) {
+	$compiler->addExtension('thumbnail', new Kollarovic\Thumbnail\DI\Extension);
+};
+
+\--
+
+Ďalej do prezenteru pridáme:
+
+/-- code php
+
+abstract class BasePresenter extends Nette\Application\UI\Presenter
+{
+
+	/** @var \Kollarovic\Thumbnail\AbstractGenerator */
+	protected $thumbnailGenerator;
+
+
+	public function injectThumbnail(\Kollarovic\Thumbnail\AbstractGenerator $thumbnailGenerator)
+	{
+		$this->thumbnailGenerator = $thumbnailGenerator;
+	}
+
+
+	protected function createTemplate($class = NULL)
+	{
+		$template = parent::createTemplate($class);
+		$template->registerHelper('thumbnail', $this->thumbnailGenerator->thumbnail);
+		return $template;
+	}
+}
+
+\--
+
+Konfigurácia
+---------------
+
+Konfigurácia je nepovinná a zadávame ju do `app/config/config.neon`, do sekcie `thumbnail`. Na výpise sú štandardné hodnoty:
+
+/-- code neon
+
+common:
+	thumbnail:
+		thumbPathMask: 'images/thumbs/{filename}-{width}x{height}.{extension}'
+		placeholder: 'http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found'
+\--
+
+
+Parameter `thumbPathMask` je maska pre cestu ukladania náhľadov.
+
+napr pre `{='images/product.jpg'|thumbnail: 150, 150}`
+
+|* Maska |* Vygeneruje
+|images/{filename}-{width}x{height}.{extension}| images/product-150x150.jpg
+|images/cache/{width}x{height}/{filename}.{extension}| images/cache/150x150/product.jpg
+
+Parameter `placeholder` je url obrázku ktoré bude vrátené v prípade, že zdrojový obrázok neexistuje. Url je formátovaná obdobne ako `thumbPathMask`.
+
+napr:
+
+/-- code neon
+
+http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found
+http://placehold.it/{width}x{height}&text={src}+not+found
+http://example.com/images/none.png
+
+\--
+
+{{author: Mario Kollarovic|8230}}
