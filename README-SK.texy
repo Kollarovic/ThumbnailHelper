@@ -20,8 +20,8 @@ Použitie v šablóne
 
 \--
 
-Helper skontroluje či existuje náhľad k obrázku a či je aktuálny. Ak nie, tak ho vygeneruje a uloží podľa nastavenia. 
-Poprípade vytvorí potrebné podadresáre. Helper vracia cestu k náhľadu.
+Helper skontroluje či existuje náhľad k obrázku a či je aktuálny. Ak nie, tak ho vygeneruje a uloží 
+podľa nastavenia. Poprípade vytvorí potrebné podadresáre. Helper vracia cestu k náhľadu.
 
 Inštalácia
 ---------------
