@@ -19,7 +19,7 @@ class Generator extends AbstractGenerator
 	protected function createThumb()
 	{
 		$image = Nette\Image::fromFile($this->src);
-		$image->resize($this->width, $this->height);
+		$image->resize($this->width, $this->height, $this->crop ? Nette\Image::EXACT : Nette\Image::FIT);
 		$image->save($this->desc);
 	}
 

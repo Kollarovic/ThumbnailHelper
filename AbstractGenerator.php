@@ -26,6 +26,9 @@ abstract class AbstractGenerator extends Nette\Object
 	/** @var int */
 	protected $height;
 
+	/** @var bool */
+	protected $crop;
+
 	/** @var string */
 	private $wwwDir;
 
@@ -60,11 +63,12 @@ abstract class AbstractGenerator extends Nette\Object
 	 * @param int
 	 * @return string
 	 */
-	public function thumbnail($src, $width, $height = NULL)
+	public function thumbnail($src, $width, $height = NULL, $crop = false )
 	{
 		$this->src = $this->wwwDir . '/' . $src;
 		$this->width = $width;
 		$this->height = $height;
+		$this->crop = $crop;
 
 		if (!is_file($this->src)) {
 			return $this->createPlaceholderPath();
