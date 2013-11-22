@@ -2,7 +2,7 @@
 	"name": "kollarovic/thumbnail",
 	"description" : "Generating image thumbnails",
 	"keywords": ["thumbnail", "nette", "latte", "image"],
-	"version": "0.5",
+	"version": "0.8",
 	"license": "New BSD",
 
 	"authors": [
