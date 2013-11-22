@@ -5,6 +5,11 @@ namespace Kollarovic\Thumbnail\DI;
 use Nette\Config\CompilerExtension;
 
 
+if (class_exists('Nette\DI\CompilerExtension')) {
+	class_alias('Nette\DI\CompilerExtension', 'Nette\Config\CompilerExtension');
+}
+
+
 /**
  * Extension
  *
