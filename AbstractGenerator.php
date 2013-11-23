@@ -61,6 +61,7 @@ abstract class AbstractGenerator extends Nette\Object
 	 * @param string
 	 * @param int
 	 * @param int
+	 * @param bool
 	 * @return string
 	 */
 	public function thumbnail($src, $width, $height = NULL, $crop = false )
