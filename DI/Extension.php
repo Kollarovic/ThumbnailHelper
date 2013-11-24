@@ -2,11 +2,11 @@
 
 namespace Kollarovic\Thumbnail\DI;
 
-use Nette\Config\CompilerExtension;
+use Nette;
 
 
-if (class_exists('Nette\DI\CompilerExtension')) {
-	class_alias('Nette\DI\CompilerExtension', 'Nette\Config\CompilerExtension');
+if (!class_exists('Nette\DI\CompilerExtension')) {
+	class_alias('Nette\Config\CompilerExtension', 'Nette\DI\CompilerExtension');
 }
 
 
@@ -15,7 +15,7 @@ if (class_exists('Nette\DI\CompilerExtension')) {
  *
  * @author  Mario Kollarovic
  */
-class Extension extends CompilerExtension
+class Extension extends Nette\DI\CompilerExtension
 {
 
 	public $defaults = array(
