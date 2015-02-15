@@ -56,10 +56,27 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		return $template;
 	}
 }
-
 ```
 
-  
+Installation via config.neon (nette 2.2+)
+-----------------------------------------
+
+```yaml
+
+# nette 2.2+
+extensions:
+	thumbnail: Kollarovic\Thumbnail\DI\Extension
+```
+
+Register latte filter |translate
+```yaml
+
+services:
+	nette.latteFactory:
+		setup:
+			- addFilter(thumbnail, [@thumbnail.thumbnail, thumbnail])
+```
+
 Configuration
 -------------
 
@@ -67,9 +84,8 @@ config.neon
 
 ```yaml
 
-common:
-  thumbnail:
-		thumbPathMask: 'images/thumbs/{filename}-{width}x{height}.{extension}'
-		placeholder: 'http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found'
+thumbnail:
+	thumbPathMask: 'images/thumbs/{filename}-{width}x{height}.{extension}'
+	placeholder: 'http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found'
     
 ```
