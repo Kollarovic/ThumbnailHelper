@@ -109,12 +109,13 @@ abstract class AbstractGenerator extends Nette\Object
 	/**
 	 * @return string
 	 */
-	private function createThumbPath() {
+	private function createThumbPath() 
+	{
 		$pathinfo = pathinfo($this->src);
-		$md5      = md5($this->src);
-		$search   = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
-		$replace  = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5);
-
+		$md5 = md5($this->src);
+		$md5Dir = $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5;
+		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
+		$replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
 		return str_replace($search, $replace, $this->thumbPathMask);
 	}
 
