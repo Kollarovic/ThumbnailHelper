@@ -68,7 +68,7 @@ extensions:
 	thumbnail: Kollarovic\Thumbnail\DI\Extension
 ```
 
-Register latte filter |translate
+Register latte filter |thumbnail
 ```yaml
 
 services:
