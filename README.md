@@ -22,60 +22,15 @@ composer.json
 
 ```
 
-bootstrap.php
-
-
-```php
-$configurator->onCompile[] = function ($configurator, $compiler) {
-  $compiler->addExtension('thumbnail', new Kollarovic\Thumbnail\DI\Extension);
-};
-
-```
-
-presenter
-
-```php
-
-abstract class BasePresenter extends Nette\Application\UI\Presenter
-{
-
-  /** @var \Kollarovic\Thumbnail\AbstractGenerator */
-	protected $thumbnailGenerator;
-
-
-	public function injectThumbnail(\Kollarovic\Thumbnail\AbstractGenerator $thumbnailGenerator)
-	{
-		$this->thumbnailGenerator = $thumbnailGenerator;
-	}
-
-
-	protected function createTemplate($class = NULL)
-	{
-		$template = parent::createTemplate($class);
-		$template->registerHelper('thumbnail', $this->thumbnailGenerator->thumbnail);
-		return $template;
-	}
-}
-```
-
-Installation via config.neon (nette 2.2+)
------------------------------------------
+config.neon
 
 ```yaml
 
-# nette 2.2+
+
 extensions:
 	thumbnail: Kollarovic\Thumbnail\DI\Extension
 ```
 
-Register latte filter |thumbnail
-```yaml
-
-services:
-	nette.latteFactory:
-		setup:
-			- addFilter(thumbnail, [@thumbnail.thumbnail, thumbnail])
-```
 
 Configuration
 -------------
