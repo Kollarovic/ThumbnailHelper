@@ -2,7 +2,6 @@
 	"name": "kollarovic/thumbnail",
 	"description" : "Generating image thumbnails",
 	"keywords": ["thumbnail", "nette", "latte", "image"],
-	"version": "0.8",
 	"license": "New BSD",
 
 	"authors": [
@@ -16,7 +15,15 @@
 		"php": ">=5.3.1",
 		"nette/nette": "~2.0@rc"
 	},
+
+	"require-dev": {
+		"nette/tester": "~1.3",
+		"mockery/mockery": "~0.9"
+	},
+
 	"autoload": {
-		"classmap": ["/"]
+		"psr-0": {
+			"Kollarovic\\Thumbnail": "src/"
+		}
 	}
 }
