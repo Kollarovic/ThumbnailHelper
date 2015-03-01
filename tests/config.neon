@@ -1,0 +1,8 @@
+extensions:
+	thumbnail: Kollarovic\Thumbnail\DI\Extension
+
+
+thumbnail:
+	thumbPathMask: 'images/thumbs/{filename}-{width}x{height}.{extension}'
+	placeholder: 'http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found'
+
