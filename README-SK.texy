@@ -38,43 +38,15 @@ Skopírujeme triedy do aplikácie najlepšie cez composer - `composer.json`:
 
 \--
 
+V `app/config/config.neon` zaregistrujeme rozšírenie:
 
-V `app/bootstrap.php` zaregistrujeme rozšírenie:
+/-- code neon
 
-/-- code php
-
-$configurator->onCompile[] = function ($configurator, $compiler) {
-	$compiler->addExtension('thumbnail', new Kollarovic\Thumbnail\DI\Extension);
-};
-
+extensions:
+	thumbnail: Kollarovic\Thumbnail\DI\Extension
+	
 \--
 
-Ďalej do prezenteru pridáme:
-
-/-- code php
-
-abstract class BasePresenter extends Nette\Application\UI\Presenter
-{
-
-	/** @var \Kollarovic\Thumbnail\AbstractGenerator */
-	protected $thumbnailGenerator;
-
-
-	public function injectThumbnail(\Kollarovic\Thumbnail\AbstractGenerator $thumbnailGenerator)
-	{
-		$this->thumbnailGenerator = $thumbnailGenerator;
-	}
-
-
-	protected function createTemplate($class = NULL)
-	{
-		$template = parent::createTemplate($class);
-		$template->registerHelper('thumbnail', $this->thumbnailGenerator->thumbnail);
-		return $template;
-	}
-}
-
-\--
 
 Konfigurácia
 ---------------
