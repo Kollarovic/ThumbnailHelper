@@ -56,7 +56,6 @@ abstract class TestCase extends \Tester\TestCase
 		$url->shouldReceive('getBasePath')->andReturn('/');
 		$httpRequest->shouldReceive('getUrl')->andReturn($url);
 		return $httpRequest;
-
 	}
 
 }
