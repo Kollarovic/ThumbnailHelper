@@ -2,7 +2,7 @@
 	"name": "kollarovic/thumbnail",
 	"description" : "Generating image thumbnails",
 	"keywords": ["thumbnail", "nette", "latte", "image"],
-	"license": "New BSD",
+	"license": "MIT",
 
 	"authors": [
 	{
