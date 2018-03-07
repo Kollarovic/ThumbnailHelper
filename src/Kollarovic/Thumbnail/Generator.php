@@ -13,9 +13,10 @@ use Nette;
 class Generator extends AbstractGenerator
 {
 
-    /**
-     * @return void
-     */
+	/**
+	 * @throws Nette\Utils\UnknownImageFileException
+	 * @throws \ImagickException
+	 */
     protected function createThumb()
     {
         set_time_limit(1800);

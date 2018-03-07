@@ -2,8 +2,7 @@
 
 namespace Kollarovic\Thumbnail;
 
-use Nette,
-	Nette\Http\IRequest;
+use Nette;
 
 
 /**
@@ -11,8 +10,9 @@ use Nette,
  *
  * AbstractGenerator
  */
-abstract class AbstractGenerator extends Nette\Object
+abstract class AbstractGenerator
 {
+	use Nette\SmartObject;
 
 	/** @var string */
 	protected $src;
@@ -46,13 +46,14 @@ abstract class AbstractGenerator extends Nette\Object
 
 
 	/**
-	 * @param string
-	 * @param Nette\Http\IRequest
-	 * @param string
-	 * @param string
-	 * @param string
+	 * AbstractGenerator constructor.
+	 * @param string $wwwDir
+	 * @param Nette\Http\IRequest $httpRequest
+	 * @param string $thumbPathMask
+	 * @param string $placeholder
+	 * @param string $placeholderForCustomText
 	 */
-	function __construct($wwwDir, IRequest $httpRequest, $thumbPathMask, $placeholder, $placeholderForCustomText)
+	function __construct($wwwDir, Nette\Http\IRequest $httpRequest, $thumbPathMask, $placeholder, $placeholderForCustomText)
 	{
 		$this->wwwDir = $wwwDir;
 		$this->httpRequest = $httpRequest;
