@@ -23,6 +23,7 @@ class Extension extends Nette\DI\CompilerExtension
 		'httpRequest' => '@httpRequest',
 		'thumbPathMask' => 'images/thumbs/{filename}-{width}x{height}.{extension}',
 		'placeholder' => 'http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found',
+		'placeholderForCustomText' => 'http://dummyimage.com/{width}x{height}/efefef/f00&text={text}',
 		'filterName' => 'thumbnail',
 	);
 
@@ -37,7 +38,8 @@ class Extension extends Nette\DI\CompilerExtension
 				'wwwDir' => $config['wwwDir'],
 				'httpRequest' => $config['httpRequest'],
 				'thumbPathMask' => $config['thumbPathMask'],
-				'placeholder' => $config['placeholder']
+				'placeholder' => $config['placeholder'],
+				'placeholderForCustomText' => $config['placeholderForCustomText'],
 			));
 
 		if ($builder->hasDefinition('nette.latteFactory')) {

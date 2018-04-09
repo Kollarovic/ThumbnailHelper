@@ -2,18 +2,18 @@
 
 namespace Kollarovic\Thumbnail;
 
-use Nette,
-	Nette\Http\IRequest;
+use Nette;
 
 
 /**
-* @author  Mario Kollarovic
-*
-* AbstractGenerator
-*/
-abstract class AbstractGenerator extends Nette\Object
+ * @author  Mario Kollarovic
+ *
+ * AbstractGenerator
+ */
+abstract class AbstractGenerator
 {
-	
+	use Nette\SmartObject;
+
 	/** @var string */
 	protected $src;
 
@@ -41,19 +41,25 @@ abstract class AbstractGenerator extends Nette\Object
 	/** @var string */
 	private $placeholder;
 
+	/** @var string */
+	protected $placeholderForCustomText;
+
 
 	/**
-	 * @param string
-	 * @param Nette\Http\IRequest
-	 * @param string
-	 * @param string
+	 * AbstractGenerator constructor.
+	 * @param string $wwwDir
+	 * @param Nette\Http\IRequest $httpRequest
+	 * @param string $thumbPathMask
+	 * @param string $placeholder
+	 * @param string $placeholderForCustomText
 	 */
-	function __construct($wwwDir, IRequest $httpRequest, $thumbPathMask, $placeholder)
+	function __construct($wwwDir, Nette\Http\IRequest $httpRequest, $thumbPathMask, $placeholder, $placeholderForCustomText)
 	{
 		$this->wwwDir = $wwwDir;
 		$this->httpRequest = $httpRequest;
 		$this->thumbPathMask = $thumbPathMask;
 		$this->placeholder = $placeholder;
+		$this->placeholderForCustomText = $placeholderForCustomText;
 	}
 
 
@@ -62,9 +68,10 @@ abstract class AbstractGenerator extends Nette\Object
 	 * @param int
 	 * @param int
 	 * @param bool
+	 * @param string
 	 * @return string
 	 */
-	public function thumbnail($src, $width, $height = NULL, $crop = false )
+	public function thumbnail($src, $width, $height = NULL, $crop = false, $placeholderText = NULL)
 	{
 		$this->src = $this->wwwDir . '/' . $src;
 		$this->width = $width;
@@ -72,7 +79,7 @@ abstract class AbstractGenerator extends Nette\Object
 		$this->crop = $crop;
 
 		if (!is_file($this->src)) {
-			return $this->createPlaceholderPath();
+			return $this->createPlaceholderPath($placeholderText);
 		}
 
 		$thumbRelPath = $this->createThumbPath();
@@ -80,7 +87,11 @@ abstract class AbstractGenerator extends Nette\Object
 
 		if (!file_exists($this->desc) or (filemtime($this->desc) < filemtime($this->src))) {
 			$this->createDir();
-			$this->createThumb();
+			try {
+				$this->createThumb();
+			} catch (\Exception $e) {
+				return $this->createPlaceholderPath($placeholderText);
+			}
 			clearstatcache();
 		}
 
@@ -109,27 +120,33 @@ abstract class AbstractGenerator extends Nette\Object
 	/**
 	 * @return string
 	 */
-	private function createThumbPath() 
+	private function createThumbPath()
 	{
 		$pathinfo = pathinfo($this->src);
 		$md5 = md5($this->src);
 		$md5Dir = $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5;
 		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
-		$replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
+		$replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
 		return str_replace($search, $replace, $this->thumbPathMask);
 	}
 
 
 	/**
+	 * @param string
 	 * @return string
 	 */
-	private function createPlaceholderPath()
+	private function createPlaceholderPath($placeholderText = NULL)
 	{
-		$width = $this->width===NULL ? $this->height : $this->width;
-		$height = $this->height===NULL ? $this->width : $this->height;
-		$search = array('{width}', '{height}', '{src}');
-		$replace = array($width, $height, $this->src);
-		return str_replace($search, $replace, $this->placeholder);
+		$width = $this->width === NULL ? $this->height : $this->width;
+		$height = $this->height === NULL ? $this->width : $this->height;
+		if ($placeholderText === NULL) {
+			$search = array('{width}', '{height}', '{src}');
+			$replace = array($width, $height, $this->src);
+			return str_replace($search, $replace, $this->placeholder);
+		} else {
+			$search = array('{width}', '{height}', '{src}', '{text}');
+			$replace = array($width, $height, $this->src, $placeholderText);
+			return str_replace($search, $replace, $this->placeholderForCustomText);
+		}
 	}
-
 }
