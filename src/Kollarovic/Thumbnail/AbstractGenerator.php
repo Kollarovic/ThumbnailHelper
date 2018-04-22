@@ -11,9 +11,10 @@ use Nette,
 *
 * AbstractGenerator
 */
-abstract class AbstractGenerator extends Nette\Object
+abstract class AbstractGenerator
 {
-	
+	use Nette\SmartObject;
+
 	/** @var string */
 	protected $src;
 
