@@ -1,5 +1,5 @@
 {
-	"name": "martenb/thumbnail",
+	"name": "kollarovic/thumbnail",
 	"description" : "Generating image thumbnails",
 	"keywords": ["thumbnail", "nette", "latte", "image"],
 	"license": "MIT",
@@ -23,7 +23,7 @@
 
 	"autoload": {
 		"psr-0": {
-			"Martenb\\Thumbnail": "src/"
+			"Kollarovic\\Thumbnail": "src/"
 		}
 	}
 }
