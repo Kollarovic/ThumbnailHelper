@@ -24,6 +24,7 @@ class Extension extends Nette\DI\CompilerExtension
 		'thumbPathMask' => 'images/thumbs/{filename}-{width}x{height}.{extension}',
 		'placeholder' => 'http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found',
 		'filterName' => 'thumbnail',
+		'className' => 'Kollarovic\Thumbnail\Generator',
 	);
 
 
@@ -33,7 +34,7 @@ class Extension extends Nette\DI\CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('thumbnail'))
-			->setClass('Kollarovic\Thumbnail\Generator', array(
+			->setClass($config['className'], array(
 				'wwwDir' => $config['wwwDir'],
 				'httpRequest' => $config['httpRequest'],
 				'thumbPathMask' => $config['thumbPathMask'],
