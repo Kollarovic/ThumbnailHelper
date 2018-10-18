@@ -3,6 +3,7 @@
 namespace Kollarovic\Thumbnail;
 
 use Nette,
+	Nette\SmartObject,
 	Nette\Http\IRequest;
 
 
@@ -11,9 +12,10 @@ use Nette,
 *
 * AbstractGenerator
 */
-abstract class AbstractGenerator extends Nette\Object
+abstract class AbstractGenerator
 {
-	
+	use SmartObject;
+
 	/** @var string */
 	protected $src;
 
@@ -109,7 +111,7 @@ abstract class AbstractGenerator extends Nette\Object
 	/**
 	 * @return string
 	 */
-	private function createThumbPath() 
+	private function createThumbPath()
 	{
 		$pathinfo = pathinfo($this->src);
 		$md5 = md5($this->src);
