@@ -25,6 +25,7 @@ class Extension extends Nette\DI\CompilerExtension
 		'placeholder' => 'http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found',
 		'placeholderForCustomText' => 'http://dummyimage.com/{width}x{height}/efefef/f00&text={text}',
 		'filterName' => 'thumbnail',
+		'preferImagick' => false,
 	);
 
 
@@ -40,6 +41,7 @@ class Extension extends Nette\DI\CompilerExtension
 				'thumbPathMask' => $config['thumbPathMask'],
 				'placeholder' => $config['placeholder'],
 				'placeholderForCustomText' => $config['placeholderForCustomText'],
+				'preferImagick' => $config['preferImagick'],
 			));
 
 		if ($builder->hasDefinition('nette.latteFactory')) {

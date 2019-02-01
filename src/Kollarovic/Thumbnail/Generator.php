@@ -38,12 +38,20 @@ class Generator extends AbstractGenerator
 
 			$image->writeImages($this->desc, TRUE);
 		} else {
-			//$imageImagick = new \Imagick($this->src);
-			$image = Nette\Utils\Image::fromFile($this->src);
-			$image->resize($this->width, $this->height, $this->crop ? Nette\Utils\Image::EXACT : Nette\Utils\Image::FIT);
-			$image->save($this->desc);
 
+			if (class_exists(\Imagick::class) and $this->preferImagick) {
+				$imageImagick = new \Imagick($this->src);
+				if ($this->crop) {
+					$imageImagick->cropThumbnailImage($this->width, $this->height);
+				} else {
+					$imageImagick->thumbnailImage($this->width, $this->height, TRUE);
+				}
+				$imageImagick->writeImage($this->desc);
+			} else {
+				$image = Nette\Utils\Image::fromFile($this->src);
+				$image->resize($this->width, $this->height, $this->crop ? Nette\Utils\Image::EXACT : Nette\Utils\Image::FIT);
+				$image->save($this->desc);
+			}
 		}
 	}
-
 }

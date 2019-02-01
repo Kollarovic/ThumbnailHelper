@@ -44,6 +44,7 @@ abstract class AbstractGenerator
 	/** @var string */
 	protected $placeholderForCustomText;
 
+	protected $preferImagick = false;
 
 	/**
 	 * AbstractGenerator constructor.
@@ -53,13 +54,14 @@ abstract class AbstractGenerator
 	 * @param string $placeholder
 	 * @param string $placeholderForCustomText
 	 */
-	function __construct($wwwDir, Nette\Http\IRequest $httpRequest, $thumbPathMask, $placeholder, $placeholderForCustomText)
+	function __construct($wwwDir, Nette\Http\IRequest $httpRequest, $thumbPathMask, $placeholder, $placeholderForCustomText, $preferImagick=false)
 	{
 		$this->wwwDir = $wwwDir;
 		$this->httpRequest = $httpRequest;
 		$this->thumbPathMask = $thumbPathMask;
 		$this->placeholder = $placeholder;
 		$this->placeholderForCustomText = $placeholderForCustomText;
+		$this->preferImagick = $preferImagick;
 	}
 
 
