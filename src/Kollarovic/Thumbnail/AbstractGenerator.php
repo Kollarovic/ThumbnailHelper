@@ -11,7 +11,7 @@ use Nette,
 *
 * AbstractGenerator
 */
-abstract class AbstractGenerator extends Nette\Object
+abstract class AbstractGenerator
 {
 	
 	/** @var string */
