@@ -13,13 +13,8 @@ Installation
 
 composer.json
 
-```json
-{
-    "require":{
-        "kollarovic/thumbnail": "dev-master"
-    }
-}
-
+```
+composer require kollarovic/thumbnail
 ```
 
 config.neon

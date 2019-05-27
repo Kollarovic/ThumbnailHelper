@@ -2,24 +2,24 @@
 
 namespace Kollarovic\Thumbnail;
 
-use Nette;
+use Nette\Utils\Image;
 
 
 /**
-* @author  Mario Kollarovic
-*
-* Generator
-*/
+ * @author  Mario Kollarovic
+ *
+ * Generator
+ */
 class Generator extends AbstractGenerator
 {
 
 	/**
 	 * @return void
- 	 */
+	 */
 	protected function createThumb()
 	{
-		$image = Nette\Image::fromFile($this->src);
-		$image->resize($this->width, $this->height, $this->crop ? Nette\Image::EXACT : Nette\Image::FIT);
+		$image = Image::fromFile($this->src);
+		$image->resize($this->width, $this->height, $this->crop ? Image::EXACT : Image::FIT);
 		$image->save($this->desc);
 	}
 

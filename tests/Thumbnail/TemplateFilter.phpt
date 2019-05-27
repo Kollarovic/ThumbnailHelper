@@ -40,6 +40,7 @@ class TemplateFilterTest extends TestCase
 		$mockControl = Mockery::mock('Nette\Application\UI\Control');
 		$mockControl->shouldReceive('getPresenter')->andReturnNull();
 		$mockControl->shouldReceive('templatePrepareFilters');
+        $mockControl->shouldReceive('hasPresenter')->andReturn(true);
 		return $container->getByType('Nette\Application\UI\ITemplateFactory')->createTemplate($mockControl);
 	}
 }
