@@ -17,7 +17,8 @@
 		"nette/utils": "^3.0 || ^4.0",
 		"nette/http": "^3.0",
 		"nette/application": "^3.0",
-		"latte/latte": "^3.0"
+		"latte/latte": "^3.0",
+		"phpstan/phpstan-nette": "^1.2"
 	},
 
 	"require-dev": {
