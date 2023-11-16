@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kollarovic\Thumbnail\DI;
 
-use Nette;
+use Nette\DI\Definitions\FactoryDefinition;
+use Nette\DI\CompilerExtension;
 
 
 /**
@@ -10,10 +13,10 @@ use Nette;
  *
  * @author  Mario Kollarovic
  */
-class Extension extends Nette\DI\CompilerExtension
+class Extension extends CompilerExtension
 {
 
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
@@ -37,7 +40,9 @@ class Extension extends Nette\DI\CompilerExtension
 
 		if ($builder->hasDefinition('nette.latteFactory')) {
 			$definition = $builder->getDefinition('nette.latteFactory');
-			$definition->getResultDefinition()->addSetup('addFilter', array($config['filterName'], array($this->prefix('@thumbnail'), 'thumbnail')));
+            if ($definition instanceof FactoryDefinition) {
+                $definition->getResultDefinition()->addSetup('addFilter', array($config['filterName'], array($this->prefix('@thumbnail'), 'thumbnail')));
+            }
 		}
 	}
 

@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kollarovic\Thumbnail;
 
-use Nette;
-use    Nette\Http\IRequest;
+use Nette\Http\IRequest;
 
 
 /**
@@ -20,10 +21,10 @@ abstract class AbstractGenerator
 	/** @var string */
 	protected $desc;
 
-	/** @var int */
+	/** @var int|string|null */
 	protected $width;
 
-	/** @var int */
+	/** @var int|string|null */
 	protected $height;
 
 	/** @var bool */
@@ -42,13 +43,7 @@ abstract class AbstractGenerator
 	private $placeholder;
 
 
-	/**
-	 * @param string
-	 * @param IRequest
-	 * @param string
-	 * @param string
-	 */
-	function __construct($wwwDir, IRequest $httpRequest, $thumbPathMask, $placeholder)
+	function __construct(string $wwwDir, IRequest $httpRequest, string $thumbPathMask, string $placeholder)
 	{
 		$this->wwwDir = $wwwDir;
 		$this->httpRequest = $httpRequest;
@@ -57,14 +52,7 @@ abstract class AbstractGenerator
 	}
 
 
-	/**
-	 * @param string
-	 * @param int
-	 * @param int
-	 * @param bool
-	 * @return string
-	 */
-	public function thumbnail($src, $width, $height = NULL, $crop = false)
+	public function thumbnail(string $src, int|string|null $width, int|string|null $height = null, bool $crop = false): string
 	{
 		$this->src = $this->wwwDir . '/' . $src;
 		$this->width = $width;
@@ -88,16 +76,10 @@ abstract class AbstractGenerator
 	}
 
 
-	/**
-	 * @return void
-	 */
-	abstract protected function createThumb();
+	abstract protected function createThumb(): void;
 
 
-	/**
-	 * @return void
-	 */
-	private function createDir()
+	private function createDir(): void
 	{
 		$dir = dirname($this->desc);
 		if (!is_dir($dir)) {
@@ -106,24 +88,18 @@ abstract class AbstractGenerator
 	}
 
 
-	/**
-	 * @return string
-	 */
-	private function createThumbPath()
+	private function createThumbPath(): string
 	{
 		$pathinfo = pathinfo($this->src);
 		$md5 = md5($this->src);
 		$md5Dir = $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5;
 		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
-		$replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
+		$replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], $pathinfo['extension'] ?? null, $md5Dir);
 		return str_replace($search, $replace, $this->thumbPathMask);
 	}
 
 
-	/**
-	 * @return string
-	 */
-	private function createPlaceholderPath()
+	private function createPlaceholderPath(): string
 	{
 		$width = $this->width === NULL ? $this->height : $this->width;
 		$height = $this->height === NULL ? $this->width : $this->height;

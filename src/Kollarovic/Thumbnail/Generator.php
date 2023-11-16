@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kollarovic\Thumbnail;
 
 use Nette\Utils\Image;
@@ -13,10 +15,7 @@ use Nette\Utils\Image;
 class Generator extends AbstractGenerator
 {
 
-	/**
-	 * @return void
-	 */
-	protected function createThumb()
+	protected function createThumb(): void
 	{
 		$image = Image::fromFile($this->src);
 		$image->resize($this->width, $this->height, $this->crop ? Image::EXACT : Image::FIT);
