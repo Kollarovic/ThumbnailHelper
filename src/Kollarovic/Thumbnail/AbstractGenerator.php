@@ -60,7 +60,10 @@ abstract class AbstractGenerator
 		$this->crop = $crop;
 
 		if (!is_file($this->src)) {
-			return $this->createPlaceholderPath();
+			$this->src = $this->wwwDir . '/' . $this->placeholder;
+			if (!is_file($this->src)) {
+				return $this->createPlaceholderPath();
+			}
 		}
 
 		$thumbRelPath = $this->createThumbPath();
