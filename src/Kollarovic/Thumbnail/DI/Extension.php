@@ -40,9 +40,9 @@ class Extension extends CompilerExtension
 
 		if ($builder->hasDefinition('nette.latteFactory')) {
 			$definition = $builder->getDefinition('nette.latteFactory');
-            if ($definition instanceof FactoryDefinition) {
-                $definition->getResultDefinition()->addSetup('addFilter', array($config['filterName'], array($this->prefix('@thumbnail'), 'thumbnail')));
-            }
+			if ($definition instanceof FactoryDefinition) {
+				$definition->getResultDefinition()->addSetup('addFilter', array($config['filterName'], array($this->prefix('@thumbnail'), 'thumbnail')));
+			}
 		}
 	}
 
